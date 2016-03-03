@@ -18,8 +18,11 @@
   "homepage": "https://github.com/jacobnigh/Courier#readme",
   "dependencies": {
     "bower": "^1.7.7",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-ng-annotate": "^2.0.0",
     "gulp-nodemon": "^2.0.6"
   }
 }

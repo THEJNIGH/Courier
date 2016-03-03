@@ -6,7 +6,7 @@ app.use('/templates', express.static('templates'))
 app.use(express.static('www'))
 
 app.get('*', function (req, res) {
-    res.send('www/index.html')
+    res.render('index.html.ejs')
 })
 
 var server = app.listen(process.env.PORT || 3000, function (){
