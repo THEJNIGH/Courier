@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "angularfire": "^1.1.4",
-    "angular-ui-bootstrap": "^1.2.1"
+    "angular-route": "^1.5.0",
+    "angular-bootstrap": "^1.2.1"
   }
 }

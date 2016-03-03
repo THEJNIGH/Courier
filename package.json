@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/jacobnigh/Courier#readme",
   "dependencies": {
-    "bower": "^1.7.7"
+    "bower": "^1.7.7",
+    "express": "^4.13.4",
+    "gulp": "^3.9.1",
+    "gulp-nodemon": "^2.0.6"
   }
 }
