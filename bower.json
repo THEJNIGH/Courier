@@ -1,0 +1,22 @@
+{
+  "name": "courier",
+  "description": "Angular App",
+  "main": "index.js",
+  "authors": [
+    "Jacob Nigh"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/jacobnigh/Courier",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularfire": "^1.1.4",
+    "angular-ui-bootstrap": "^1.2.1"
+  }
+}
