@@ -18,4 +18,8 @@ gulp.task('js:build', function() {
     .pipe(gulp.dest('./www/js/'));
 })
 
-gulp.task('default', ['server', 'js:build']);
+gulp.task('js:watch', ['js:build'], function () {
+  gulp.watch('./ng/**/*.js', ['js:build'])
+})
+
+gulp.task('default', ['server', 'js:watch']);

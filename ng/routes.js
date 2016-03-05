@@ -6,10 +6,6 @@ angular.module('courier')
         templateUrl: 'templates/landing.html',
         controller: 'MainController'
       })
-      .when('/signup', {
-        templateUrl: 'templates/signup.html',
-        controller: 'SignupController'
-      })
       .when('/chat', {
         templateUrl: 'templates/chat.html',
         controller: 'ChatController'

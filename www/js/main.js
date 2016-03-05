@@ -8,10 +8,6 @@ angular.module('courier')
         templateUrl: 'templates/landing.html',
         controller: 'MainController'
       })
-      .when('/signup', {
-        templateUrl: 'templates/signup.html',
-        controller: 'SignupController'
-      })
       .when('/chat', {
         templateUrl: 'templates/chat.html',
         controller: 'ChatController'
@@ -37,8 +33,39 @@ angular.module('courier')
   }]);
 
 angular.module('courier')
-  .controller('MainController', ["$scope", function($scope) {
-    console.log('It works.');
+  .controller('MainController', ["$scope", "$firebaseArray", "$firebaseAuth", "$location", function($scope, $firebaseArray, $firebaseAuth, $location) {
+    $scope.register = false;
+
+    var ref = new Firebase("https://courier-app.firebaseio.com");
+    $scope.authObj = $firebaseAuth(ref);
+
+    $scope.registerUser = function() {
+      $scope.authObj.$createUser({
+        email: $scope.newUser.email,
+        password: $scope.newUser.password
+      }).then(function(userData) {
+        return $scope.authObj.$authWithPassword({
+          email: $scope.newUser.email,
+          password: $scope.newUser.password
+        });
+      }).then(function(authData) {
+        $location.path('/chat');
+      }).catch(function(error) {
+        console.error("Error: ", error);
+      });
+    }
+
+    $scope.login = function() {
+      $scope.authObj.$authWithPassword({
+        email: $scope.user.email,
+        password: $scope.user.password,
+      }).then(function(authData) {
+        console.log("Logged in as:", authData.uid);
+      }).catch(function(error) {
+        console.error("Authentication failed:", error);
+      });
+    }
+
   }]);
 
 angular.module('courier')

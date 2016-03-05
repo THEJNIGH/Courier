@@ -1,6 +1,115 @@
-body{
+body {
   padding: 0;
   margin: 0;
-  background-color: #4093A6;
+  background: url('images/landingpage.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
   font: 16px Lato, sans-serif;
+}
+
+div.logo img {
+  display: block;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+form {
+  min-height: 250px;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 29%;
+  border-radius: 7px;
+}
+
+form input.one {
+  height: 35px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  border: none;
+  width: 94%;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+form input.two {
+  height: 35px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border: none;
+  border-top: 1px solid #3F3F3F;
+  width: 94%;
+  padding-left: 10px;
+}
+
+form input.v1 {
+  height: 35px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  border: none;
+  width: 94%;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+form input.v2 {
+  height: 35px;
+  border: none;
+  border-top: 1px solid #3F3F3F;
+  width: 94%;
+  padding-left: 10px;
+}
+
+form input.v3 {
+  height: 35px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border: none;
+  border-top: 1px solid #3F3F3F;
+  width: 94%;
+  padding-left: 10px;
+}
+
+div.email {y
+  margin: 0 auto;
+}
+
+div.pwd {
+  margin: 0 auto;
+}
+
+form button.login {
+  height: 40px;
+  width: 400px;
+  font-size: 1.25rem;
+  color: #FFFFF7;
+  border-radius: 7px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+  border: none;
+  background-color: #4EB96E;
+}
+
+span.under {
+  text-decoration: underline;
+}
+
+a {
+  font-size: .8rem;
+  text-decoration: none;
+}
+
+a:link {
+  color: #FFFEF7;
+}
+
+a:visited {
+  color: #FFFEF7;
+}
+
+a:hover {
+  color: #FFFEF7;
+}
+
+a:active {
+  color: #FFFEF7;
 }

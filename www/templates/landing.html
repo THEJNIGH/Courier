@@ -1,1 +1,33 @@
-<img src="../assets/images/logo.png" alt="Courier" />
+<div class="container">
+  <div class="col-lg-12 logo">
+    <img src="../assets/images/logoCream.png" alt="Courier" />
+  </div>
+  <div class="col-lg-12">
+    <form ng-show="!register" ng-submit="login()">
+      <div class="form-group email">
+        <input type="email" class="form-control one" placeholder="Enter email" ng-model="user.email" />
+      </div>
+      <div class="form-group pwd">
+        <input type="password" class="form-control two" placeholder="Enter password" ng-model="user.password" />
+      </div>
+      <button type="submit" class="btn btn-default login">Login</button>
+      <a href="#" ng-click="register = !register">Don't have an account?
+        <span class="under">Click here! </span>
+      </a>
+    </form>
+
+    <form ng-show="register" ng-submit="registerUser()">
+      <div class="form-group name">
+        <input type="text" class="form-control v1" placeholder="Enter name" ng-model="newUser.name"/>
+      </div>
+      <div class="form-group email">
+        <input type="email" class="form-control v2" placeholder="Enter email" ng-model="newUser.email"/>
+      </div>
+      <div class="form-group pwd">
+        <input type="password" class="form-control v3" placeholder="Enter password" ng-model="newUser.password"/>
+      </div>
+      <button type="submit" class="btn btn-default login">Register</button>
+      <a href="#" ng-click="register = !register">Already a member? <span class="under">Click here! </span></a>
+    </form>
+  </div>
+</div>
