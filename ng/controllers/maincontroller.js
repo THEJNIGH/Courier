@@ -21,7 +21,8 @@ angular.module('courier')
 
         ref.child(userData.uid).set({
           name: $scope.newUser.name,
-          email: $scope.newUser.email
+          email: $scope.newUser.email,
+          userType: 'user'
         })
 
         return $scope.authObj.$authWithPassword({
