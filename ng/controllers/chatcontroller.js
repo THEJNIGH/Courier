@@ -4,7 +4,7 @@ angular.module('courier')
 
     var URL = 'https://courier-app.firebaseio.com/';
     var ref = new Firebase(URL);
-    var list = $firebaseArray(ref);
+    var chat = $firebaseArray(ref);
     $scope.authObj = $firebaseAuth(ref);
 
     $scope.authObj.$onAuth(function(authData) {

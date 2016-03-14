@@ -10,10 +10,15 @@ div.members{
 
 div.chatWindow{
   background-color: gray;
+  min-height: 500px;
+}
+
+div.sendMessage {
+  background-color: red;
 }
 
 div.message{
-  
+
 }
 
 h3,h4 {
