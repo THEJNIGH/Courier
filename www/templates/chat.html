@@ -1,16 +1,28 @@
-<div class="row">
-  <div class="col-md-4 members">
-    <h3> Team Members </h3>
+<div class="col-lg-4">
+  <div id="profile">
+    <h2> {{ user.name }} </h2>
+    <a href="/edit"><img src="../assets/images/editv2.png" /></a>
+  </div>
+  <div class="members">
+    <span id="banner">
+      <h3>Courier Members</h3>
+    </span>
     <p ng-repeat="user in users"> {{ user.name }} </p>
-    <h4> Private Messages </h4>
+
+    <h4>Private Messages</h4>
     <p ng-repeat="private in users"> {{ user.private }} </p>
   </div>
-  <div class="col-md-8 chatWindow">
-    <div class="sendMessage">
-      <form ng-submit="showMessages()">
-        <input type="text" class="form-control" placeholder="Write something..." ng-model="message" />
-        <button type="submit" class="btn btn-default">Send</button>
-      </form>
-    </div>
-  </div>
+</div>
+<div class="col-lg-8 chatWindow " ng-scroll-bottom="chat">
+  <p ng-repeat="message in chat">
+    <strong> {{ message.user }}:</strong>
+    {{ message.text }}
+    <span class="time"> ( {{ message.timeStamp | date: 'mediumTime' }} ) </span>
+  </p>
+</div>
+<div class="col-lg-8 chatBar">
+  <form ng-submit="chatWindow()" class="form-inline">
+    <input type="text" class="form-control message" placeholder="Say something creative..." ng-model="message.text" />
+    <button type="submit" class="btn btn-default">Send</button>
+  </form>
 </div>

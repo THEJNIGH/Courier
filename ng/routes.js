@@ -10,4 +10,8 @@ angular.module('courier')
         templateUrl: 'templates/chat.html',
         controller: 'ChatController'
       })
+      .when('/edit', {
+        templateUrl: 'templates/edit.html',
+        controller: 'EditController'
+      })
   })
