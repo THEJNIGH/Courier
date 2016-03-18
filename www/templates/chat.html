@@ -7,7 +7,7 @@
     <span id="banner">
       <h3>Courier Members</h3>
     </span>
-    <p ng-repeat="user in users"> {{ user.name }} </p>
+    <pre ng-repeat="conUser in connectedList"> {{ conUser | json }} </pre>
 
     <h4>Private Messages</h4>
     <p ng-repeat="private in users"> {{ user.private }} </p>

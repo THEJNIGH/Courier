@@ -7,9 +7,7 @@ angular.module('courier').directive('ngScrollBottom', ['$timeout', function ($ti
     },
     link: function ($scope, $element) {
       $element = $element[0]
-      console.log('log', $element)
       $scope.$watchCollection('ngScrollBottom', function (newValue) {
-        console.log('newValue',newValue)
         if (newValue) {
           $timeout(function(){
             $element.scrollTop = $element.scrollHeight;
@@ -45,22 +43,21 @@ angular.module('courier')
 
     var URL = 'https://courier-app.firebaseio.com/';
     var ref = new Firebase(URL);
-    var online = new Firebase(URL + '/.info/connected');
-
-    online.on("value", function(snap) {
-      if (snap.val() === true) {
-
-      } else {
-        console.log("not connected");
-      }
-    });
 
     $scope.authObj = $firebaseAuth(ref);
 
     $scope.authObj.$onAuth(function(authData) {
       if(authData) {
 
-        var userRef = new Firebase(URL + '/users/' + authData.uid);//User data Firebase
+        var userURL = URL + '/users/' + authData.uid;
+        var connections = new Firebase(userURL + '/connections');
+        var lastOnline = new Firebase(userURL + '/lastOnline');
+        var connected = new Firebase(URL + '/.info/connected');
+        var connectedUsers = new Firebase(URL + '/connectedUsers/' + authData.uid);
+        var connectedList = new Firebase(URL + '/connectedUsers/');
+        $scope.connectedList = $firebaseArray(connectedList);
+
+        var userRef = new Firebase(userURL);//User data Firebase
         var obj = $firebaseObject(userRef);
 
         var chatRef = new Firebase(URL + '/chat/public/');
@@ -69,22 +66,28 @@ angular.module('courier')
         chatArray.$loaded()
         .then(function(data) {
           $scope.chat = data;
-          console.log("CHAT DATA::: ", $scope.chat);
         })
         .catch(function(error) {
           console.log("Error:", error);
         });
 
         obj.$loaded().then(function(userData ) {
-          console.log("USERDATA", userData);
           $scope.user = userData;
+          connected.on('value', function(snap) {
+            if (snap.val() === true) {
+              var con = connections.push(true);
+              var conUser = connectedUsers.push($scope.user.name);
+              con.onDisconnect().remove();
+              conUser.onDisconnect().remove();
+              lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
+            }
+          });
         });
 
         $scope.user = obj;
         $scope.chat = chatArray;
 
         $scope.chatWindow = function() {
-          console.log("FIRE", $scope.chat);
           var getDate = Date.now();
 
           chatArray.$add({
