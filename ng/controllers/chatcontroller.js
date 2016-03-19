@@ -15,7 +15,7 @@ angular.module('courier')
         var connections = new Firebase(userURL + '/connections');
         var lastOnline = new Firebase(userURL + '/lastOnline');
         var connected = new Firebase(URL + '/.info/connected');
-        var connectedUsers = new Firebase(URL + '/connectedUsers/' + authData.uid);
+        var connectedUsersRef = new Firebase(URL + '/connectedUsers/' + authData.uid);
         var connectedList = new Firebase(URL + '/connectedUsers/');
         $scope.connectedList = $firebaseArray(connectedList);
 
@@ -25,6 +25,8 @@ angular.module('courier')
         var chatRef = new Firebase(URL + '/chat/public/');
         var chatArray = $firebaseArray(chatRef);//Chat data Firebase
 
+        var connectedUsers = $firebaseObject(connectedUsersRef);
+
         chatArray.$loaded()
         .then(function(data) {
           $scope.chat = data;
@@ -33,12 +35,13 @@ angular.module('courier')
           console.log("Error:", error);
         });
 
-        obj.$loaded().then(function(userData ) {
+        obj.$loaded().then(function(userData) {
           $scope.user = userData;
           connected.on('value', function(snap) {
             if (snap.val() === true) {
               var con = connections.push(true);
-              var conUser = connectedUsers.push($scope.user.name);
+              connectedUsers.name = $scope.user.name;
+              connectedUsers.$save();
               con.onDisconnect().remove();
               conUser.onDisconnect().remove();
               lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);

@@ -3,7 +3,16 @@
 <form ng-submit="editProfile()">
   <div class="form-group">
     <label for="fullName"></label>
-    <input
+    <input type="text" class="form-control" ng-model="editUser.name" />
   </div>
-
+  <div class="form-group">
+    <label for="email"></label>
+    <input type="text" class="form-control" ng-model="editUser.email" />
+  </div>
+  <div class="form-group">
+    <label for="fullName"></label>
+    <input type="text" class="form-control" ng-model="editUser.bio" />
+  </div>
+  <button type="reset" class="btn btn-default">Cancel </button>
+  <button type="submit" class="btn btn-default">Submit Changes </button>
 </form>

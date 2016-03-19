@@ -53,7 +53,7 @@ angular.module('courier')
         var connections = new Firebase(userURL + '/connections');
         var lastOnline = new Firebase(userURL + '/lastOnline');
         var connected = new Firebase(URL + '/.info/connected');
-        var connectedUsers = new Firebase(URL + '/connectedUsers/' + authData.uid);
+        var connectedUsersRef = new Firebase(URL + '/connectedUsers/' + authData.uid);
         var connectedList = new Firebase(URL + '/connectedUsers/');
         $scope.connectedList = $firebaseArray(connectedList);
 
@@ -63,6 +63,8 @@ angular.module('courier')
         var chatRef = new Firebase(URL + '/chat/public/');
         var chatArray = $firebaseArray(chatRef);//Chat data Firebase
 
+        var connectedUsers = $firebaseObject(connectedUsersRef);
+
         chatArray.$loaded()
         .then(function(data) {
           $scope.chat = data;
@@ -71,12 +73,13 @@ angular.module('courier')
           console.log("Error:", error);
         });
 
-        obj.$loaded().then(function(userData ) {
+        obj.$loaded().then(function(userData) {
           $scope.user = userData;
           connected.on('value', function(snap) {
             if (snap.val() === true) {
               var con = connections.push(true);
-              var conUser = connectedUsers.push($scope.user.name);
+              connectedUsers.name = $scope.user.name;
+              connectedUsers.$save();
               con.onDisconnect().remove();
               conUser.onDisconnect().remove();
               lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
@@ -113,6 +116,45 @@ angular.module('courier')
     });// ends $onAuth
   }]);
 
+angular.module('courier')
+  .controller('EditController', ["$scope", "$firebaseAuth", "$rootScope", "$firebaseObject", function($scope, $firebaseAuth, $rootScope, $firebaseObject) {
+    $rootScope.css = 'edit';
+
+    var obj;
+    var URL = 'https://courier-app.firebaseio.com/';
+    var ref = new Firebase(URL);
+
+    $scope.authObj = $firebaseAuth(ref);
+
+    $scope.authObj.$onAuth(function(authData) {
+      if(authData) {
+        var userRef = new Firebase(URL + '/users/' + authData.uid);
+
+        obj = $firebaseObject(userRef);
+        obj.$loaded()
+        .then(function(data) {
+          $scope.user = obj;
+          $scope.editUser = obj;
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+        });
+
+      }
+      else {
+        console.log("Logged out.")
+      }
+
+    });// ends $onAuth
+
+    $scope.editProfile = function() {
+      console.log("Saved successfully.");
+      $scope.user.name = $scope.editUser.name;
+      $scope.user.email = $scope.editUser.email;
+      $scope.user.bio = $scope.editUser.bio;
+      obj.$save();
+    }
+  }])
 
 angular.module('courier')
   .controller('MainController', ["$scope", "$rootScope", "$firebaseArray", "$firebaseAuth", "$location", function($scope, $rootScope, $firebaseArray, $firebaseAuth, $location) {
