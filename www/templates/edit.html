@@ -1,18 +1,29 @@
-<h1>Edit Profile</h1>
-<p>All changes are visible to other users.</p>
-<form ng-submit="editProfile()">
-  <div class="form-group">
-    <label for="fullName"></label>
-    <input type="text" class="form-control" ng-model="editUser.name" />
+<div id="wrapper">
+  <div id="head">
+    <h1>Edit Profile</h1>
+    <p>All changes are visible to other users.</p>
   </div>
-  <div class="form-group">
-    <label for="email"></label>
-    <input type="text" class="form-control" ng-model="editUser.email" />
-  </div>
-  <div class="form-group">
-    <label for="fullName"></label>
-    <input type="text" class="form-control" ng-model="editUser.bio" />
-  </div>
-  <button type="reset" class="btn btn-default">Cancel </button>
-  <button type="submit" class="btn btn-default">Submit Changes </button>
-</form>
+  <form ng-show="!del" ng-submit="editProfile()">
+    <div class="form-group">
+      <label for="fullName">Full Name</label>
+      <input type="text" class="form-control" ng-model="editUser.name" />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" ng-model="editUser.email" />
+    </div>
+    <div class="form-group">
+      <label for="fullName">Bio</label>
+      <textarea row="10" cols="100"class="form-control bio" ng-model="editUser.bio"></textarea>
+    </div>
+    <button type="button" onclick="location.href = '/chat';" class="btn btn-default cancel">Cancel</button>
+    <button type="submit" class="btn btn-default save">Save Changes </button>
+    <a href="#" ng-click="del = !del"> Remove account </a>
+  </form>
+  <form ng-show="del" ng-submit="delUser()">
+    <input type="password" class="form-control" placeholder="Enter password to confirm account deletion" ng-model="passUser"/>
+    <button onclick="location.href = '/';" type="submit" class="btn btn-default save2" >Remove account</button>
+    <button type="button" ng-click="del = !del" class="btn btn-default no"> Cancel </button>
+  </form>
+
+</div>

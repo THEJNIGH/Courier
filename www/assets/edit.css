@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  padding: 0;
+  font: 16px Lato, sans-serif;
+}
+
+div#wrapper {
+  width: 60%;
+  margin-left: 225px;
+  margin-top: 100px;
+}
+
+button.btn.btn-default.save {
+  background-color: #4eb96e;
+  color: #FFFEF7;
+  border: none;
+  height: 35px;
+  width: 120px;
+}
+
+button.btn.btn-default.cancel {
+  background-color: #cd4141;
+  color: #FFFEF7;
+  border: none;
+  height: 35px;
+  width: 75px;
+}
+
+button.btn.btn-default.save2 {
+  background-color: #4eb96e;
+  color: #FFFEF7;
+  border: none;
+  height: 35px;
+  width: 120px;
+  float: right;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+button.btn.btn-default.no {
+  background-color: #cd4141;
+  color: #FFFEF7;
+  border: none;
+  height: 35px;
+  width: 75px;
+  margin-top: 20px;
+  float: right;
+}
+
+div#head h1 {
+  margin: 0;
+  font-size: 2.5em;
+  font-weight: bold;
+  display: inline-block;
+}
+
+div#head p {
+  color: #7c7c7b;
+  font-size: 1.0em;
+  float: right;
+  clear: both;
+  margin: 0;
+  position: relative;
+  top: 19px;
+}
+
+form {
+  margin-top: 50px;
+}
+
+label {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  min-height: 100px;
+}
+
+a {
+  float: right;
+  position: relative;
+  top: 19px;
+}
