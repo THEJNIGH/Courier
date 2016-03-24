@@ -34,10 +34,14 @@ angular.module('courier')
         templateUrl: 'templates/edit.html',
         controller: 'EditController'
       })
+      .when('/dash', {
+        templateUrl: 'templates/dashboard.html',
+        controller: 'AdminController'
+      })
   }])
 
 angular.module('courier')
-  .controller('ChatController', ["$scope", "$firebaseObject", "$rootScope", "$firebaseArray", "$firebaseAuth", function($scope, $firebaseObject, $rootScope, $firebaseArray, $firebaseAuth) {
+  .controller('ChatController', ["$scope", "$firebaseObject", "$rootScope", "$firebaseArray", "$firebaseAuth", "$location", function($scope, $firebaseObject, $rootScope, $firebaseArray, $firebaseAuth, $location) {
     $rootScope.css = 'rest';
     $scope.messages = [];
 
@@ -75,16 +79,23 @@ angular.module('courier')
 
         obj.$loaded().then(function(userData) {
           $scope.user = userData;
-          connected.on('value', function(snap) {
-            if (snap.val() === true) {
-              var con = connections.push(true);
-              connectedUsers.name = $scope.user.name;
-              connectedUsers.$save();
-              con.onDisconnect().remove();
-              conUser.onDisconnect().remove();
-              lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
-            }
-          });
+
+          if($scope.user.userType != 'Admin'){
+            connected.on('value', function(snap) {
+              if (snap.val() === true) {
+                var con = connections.push(true);
+                connectedUsers.name = $scope.user.name;
+                connectedUsers.$save();
+                con.onDisconnect().remove();
+                conUser.onDisconnect().remove();
+                lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
+              }
+            });
+          }
+          else {
+            $location.path('/dash');
+          }
+
         });
 
         $scope.user = obj;
@@ -115,6 +126,53 @@ angular.module('courier')
 
     });// ends $onAuth
   }]);
+
+angular.module('courier')
+  .controller('AdminController', ["$scope", "$firebaseObject", "$firebaseArray", "$rootScope", "$firebaseAuth", "$location", function($scope, $firebaseObject, $firebaseArray, $rootScope, $firebaseAuth, $location) {
+    $rootScope.css = 'admin';
+
+    var obj;
+    var URL = 'https://courier-app.firebaseio.com/';
+    var ref = new Firebase(URL);
+
+    $scope.authObj = $firebaseAuth(ref);
+
+    $scope.authObj.$onAuth(function(authData) {
+      if(authData) {
+        var userRef = new Firebase(URL + '/users/');
+        array = $firebaseArray(userRef);
+        array.$loaded()
+        .then(function() {
+          $scope.users = array;
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+        });
+      }
+      else {
+        console.log("Logged Out.");
+      }
+    });
+
+    $scope.removeUser = function(user) {
+      array.$remove(user).then(function(ref) {
+        ref.key() === item.$id; // true
+      });
+    }
+
+    $scope.delUser = function() {
+      $scope.authObj.$removeUser({
+        email: $scope.user.email,
+        password: $scope.passUser
+      }).then(function() {
+        obj.$remove();
+        alert('Account removed successfully!');
+        $location.path('/');
+      }).catch(function(error) {
+        console.error("Error: ", error);
+      });
+    }
+  }])
 
 angular.module('courier')
   .controller('EditController', ["$scope", "$firebaseAuth", "$rootScope", "$firebaseObject", "$location", function($scope, $firebaseAuth, $rootScope, $firebaseObject, $location) {
@@ -163,7 +221,7 @@ angular.module('courier')
       }).then(function() {
         obj.$remove();
         alert('Account removed successfully!');
-        $location.path('/')
+        $location.path('/');
       }).catch(function(error) {
         console.error("Error: ", error);
       });

@@ -1,0 +1,18 @@
+<div id="wrapper">
+  <div id="head">
+      <h1> Admin Dashboard </h1>
+      <p> All changes made are visible to other users. </p>
+  </div>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Remove</th>
+    </tr>
+    <tr ng-repeat="user in users">
+      <td> {{ user.name }}</td>
+      <td> {{ user.email }}</td>
+      <td><button ng-click="removeUser(user)" class="btn btn-default remove">Remove User</button></td>
+    </tr>
+  </table>
+</div>

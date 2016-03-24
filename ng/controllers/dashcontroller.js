@@ -1,7 +1,6 @@
 angular.module('courier')
-  .controller('EditController', function($scope, $firebaseAuth, $rootScope, $firebaseObject, $location) {
-    $rootScope.css = 'edit';
-    $scope.del = false;
+  .controller('AdminController', function($scope, $firebaseObject, $firebaseArray, $rootScope, $firebaseAuth, $location) {
+    $rootScope.css = 'admin';
 
     var obj;
     var URL = 'https://courier-app.firebaseio.com/';
@@ -11,31 +10,25 @@ angular.module('courier')
 
     $scope.authObj.$onAuth(function(authData) {
       if(authData) {
-        var userRef = new Firebase(URL + '/users/' + authData.uid);
-        obj = $firebaseObject(userRef);
-        obj.$loaded()
-        .then(function(data) {
-          $scope.user = obj;
-          $scope.editUser = obj;
+        var userRef = new Firebase(URL + '/users/');
+        array = $firebaseArray(userRef);
+        array.$loaded()
+        .then(function() {
+          $scope.users = array;
         })
         .catch(function(error) {
           console.error("Error:", error);
         });
-
       }
       else {
-        console.log("Logged out.")
+        console.log("Logged Out.");
       }
+    });
 
-    });// ends $onAuth
-
-    $scope.editProfile = function() {
-      $scope.user.name = $scope.editUser.name;
-      $scope.user.email = $scope.editUser.email;
-      $scope.user.bio = $scope.editUser.bio;
-      obj.$save();
-      alert('Saved successfully');
-      $location.path('/chat');
+    $scope.removeUser = function(user) {
+      array.$remove(user).then(function(ref) {
+        ref.key() === item.$id; // true
+      });
     }
 
     $scope.delUser = function() {

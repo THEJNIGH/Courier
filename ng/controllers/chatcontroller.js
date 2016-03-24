@@ -1,5 +1,5 @@
 angular.module('courier')
-  .controller('ChatController', function($scope, $firebaseObject, $rootScope, $firebaseArray, $firebaseAuth) {
+  .controller('ChatController', function($scope, $firebaseObject, $rootScope, $firebaseArray, $firebaseAuth, $location) {
     $rootScope.css = 'rest';
     $scope.messages = [];
 
@@ -37,16 +37,23 @@ angular.module('courier')
 
         obj.$loaded().then(function(userData) {
           $scope.user = userData;
-          connected.on('value', function(snap) {
-            if (snap.val() === true) {
-              var con = connections.push(true);
-              connectedUsers.name = $scope.user.name;
-              connectedUsers.$save();
-              con.onDisconnect().remove();
-              conUser.onDisconnect().remove();
-              lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
-            }
-          });
+
+          if($scope.user.userType != 'Admin'){
+            connected.on('value', function(snap) {
+              if (snap.val() === true) {
+                var con = connections.push(true);
+                connectedUsers.name = $scope.user.name;
+                connectedUsers.$save();
+                con.onDisconnect().remove();
+                conUser.onDisconnect().remove();
+                lastOnline.onDisconnect().set(Firebase.ServerValue.TIMESTAMP);
+              }
+            });
+          }
+          else {
+            $location.path('/dash');
+          }
+
         });
 
         $scope.user = obj;

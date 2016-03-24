@@ -14,4 +14,8 @@ angular.module('courier')
         templateUrl: 'templates/edit.html',
         controller: 'EditController'
       })
+      .when('/dash', {
+        templateUrl: 'templates/dashboard.html',
+        controller: 'AdminController'
+      })
   })
